@@ -49,6 +49,8 @@ def create_app() -> FastAPI:
 
     return app
 
+print(get_settings().cors_origins)
+
 
 app = create_app()
 
