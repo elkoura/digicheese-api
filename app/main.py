@@ -2,6 +2,8 @@ from __future__ import annotations
 from app.db.session import engine
 from app.db.base import Base
 from app.db import init_db 
+import app.models  
+
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,6 +13,10 @@ from app.core.config import get_settings
 from app.core.exceptions import global_exception_handler
 from app.core.logging import get_logger, setup_logging
 from app.routers import auth_router, health_router
+from app.routers import auth_router, health_router, colis_router
+
+
+
 
 logger = get_logger(__name__)
 
@@ -25,6 +31,9 @@ def create_app() -> FastAPI:
     if settings.auto_create_tables:
         logger.info("Creating database tables (auto_create_tables=True)")
         Base.metadata.create_all(bind=engine)
+        init_db.init_db()
+    else:
+        logger.info("Skipping database table creation (auto_create_tables=False)")
 
     # Middleware CORS
     app.add_middleware(
@@ -53,6 +62,7 @@ def create_app() -> FastAPI:
     # Routes
     app.include_router(health_router, prefix=settings.api_prefix)
     app.include_router(auth_router, prefix=settings.api_prefix)
+    app.include_router(colis_router, prefix=settings.api_prefix)
 
     return app
 

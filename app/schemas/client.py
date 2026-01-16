@@ -6,7 +6,7 @@ from pydantic import BaseModel, EmailStr
 class ClientCreate(BaseModel):
     nom: str
     prenom: str
-    email: EmailStr | None = None
+    email: EmailStr 
     newsletter: bool = False
 
 

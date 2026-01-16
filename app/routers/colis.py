@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.dependencies import get_current_employee
+from app.core.dependencies import get_current_active_user
 from app.db.session import get_db
 from app.schemas.client import ClientCreate, ClientRead, ClientUpdate
 from app.schemas.commande import CommandeCreate, CommandeRead
@@ -11,7 +11,7 @@ router = APIRouter(prefix="/colis", tags=["colis"])
 
 
 @router.post("/clients", response_model=ClientRead, status_code=status.HTTP_201_CREATED)
-def create_client(payload: ClientCreate, db: Session = Depends(get_db), _=Depends(get_current_employee)):
+def create_client(payload: ClientCreate, db: Session = Depends(get_db), _=Depends(get_current_active_user)):
     return colis_service.create_client(
         db,
         nom=payload.nom,
@@ -22,7 +22,7 @@ def create_client(payload: ClientCreate, db: Session = Depends(get_db), _=Depend
 
 
 @router.post("/commandes", response_model=CommandeRead, status_code=status.HTTP_201_CREATED)
-def create_commande(payload: CommandeCreate, db: Session = Depends(get_db), _=Depends(get_current_employee)):
+def create_commande(payload: CommandeCreate, db: Session = Depends(get_db), _=Depends(get_current_active_user)):
     try:
         commande = colis_service.create_commande(
             db,

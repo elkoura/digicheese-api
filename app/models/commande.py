@@ -39,6 +39,6 @@ class Commande(Base):
     adresse_id: Mapped[int] = mapped_column(ForeignKey("adresses.id"), nullable=False)
 
     client = relationship("Client", back_populates="commandes")
-    adresse = relationship("Adresse")
+    adresse = relationship("Adresse", back_populates="commandes")
 
     lignes = relationship("DetailCommande", back_populates="commande", cascade="all, delete-orphan")

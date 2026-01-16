@@ -19,7 +19,7 @@ from app.services.auth_service import get_password_hash, get_user_by_email
 settings = get_settings()
 
 
-def create_admin_user(email: str = "admin@digicheese.local", password: str = "admin123", idUtil: str = "ADMIN001", nomUtil: str = "Administrator") -> None:
+def create_admin_user(email: str = "admin@digicheese.com", password: str = "admin123", idUtil: str = "ADMIN001", nomUtil: str = "Administrator") -> None:
     """Crée un utilisateur administrateur par défaut."""
     db: Session = SessionLocal()
     try:
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="Créer un administrateur par défaut")
-    parser.add_argument("--email", default="admin@digicheese.local", help="Email de l'admin")
+    parser.add_argument("--email", default="admin@digicheese.com", help="Email de l'admin")
     parser.add_argument("--password", default="admin123", help="Mot de passe de l'admin")
     parser.add_argument("--idUtil", default="ADMIN001", help="Identifiant métier")
     parser.add_argument("--nomUtil", default="Administrator", help="Nom de l'admin")

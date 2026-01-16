@@ -52,12 +52,12 @@ def create_commande(
         raise ValueError("CLIENT_NOT_FOUND")
 
     adresse = Adresse(
-        ligne1=adresse_data["ligne1"],
-        ligne2=adresse_data.get("ligne2"),
-        ligne3=adresse_data.get("ligne3"),
-        commune_id=adresse_data["commune_id"],
-        client_id=client.id,
-    )
+    comp_adresse1=adresse_data["ligne1"],
+    comp_adresse2=adresse_data.get("ligne2"),
+    comp_adresse3=adresse_data.get("ligne3"),
+    commune_id=adresse_data["commune_id"],
+    client_id=client.id,
+)
     db.add(adresse)
     db.flush()  # récupère adresse.id
 
