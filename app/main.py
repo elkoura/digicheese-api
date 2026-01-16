@@ -1,4 +1,7 @@
 from __future__ import annotations
+from app.db.session import engine
+from app.db.base import Base
+from app.db import init_db 
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,6 +21,10 @@ def create_app() -> FastAPI:
     setup_logging(settings.log_level)
 
     app = FastAPI(title=settings.app_name, debug=settings.debug)
+        # Création automatique des tables (DEV uniquement)
+    if settings.auto_create_tables:
+        logger.info("Creating database tables (auto_create_tables=True)")
+        Base.metadata.create_all(bind=engine)
 
     # Middleware CORS
     app.add_middleware(
