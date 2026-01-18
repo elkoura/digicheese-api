@@ -8,7 +8,11 @@ from app.core.config import get_settings
 from app.core.exceptions import global_exception_handler
 from app.core.logging import get_logger, setup_logging
 from app.routers import auth_router, health_router
+from app.routers.admin_communes import router as admin_communes_router
 
+app = FastAPI(title="API Admin CdC")
+
+app.include_router(admin_communes_router)
 logger = get_logger(__name__)
 
 
@@ -46,7 +50,7 @@ def create_app() -> FastAPI:
     # Routes
     app.include_router(health_router, prefix=settings.api_prefix)
     app.include_router(auth_router, prefix=settings.api_prefix)
-
+    app.include_router(admin_communes_router)
     return app
 
 
