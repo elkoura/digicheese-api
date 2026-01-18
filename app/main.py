@@ -50,7 +50,7 @@ def create_app() -> FastAPI:
     # Routes
     app.include_router(health_router, prefix=settings.api_prefix)
     app.include_router(auth_router, prefix=settings.api_prefix)
-    app.include_router(admin_communes_router)
+    app.include_router(admin_communes.router)
     return app
 
 

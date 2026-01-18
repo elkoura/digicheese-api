@@ -1,0 +1,80 @@
+# =========================
+# ENV / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# =========================
+# Virtual env
+# =========================
+.venv/
+venv/
+env/
+ENV/
+
+# =========================
+# Pytest / Coverage
+# =========================
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.cache/
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+*.out
+
+# =========================
+# Build / Packaging
+# =========================
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# =========================
+# Migrations cache (optionnel)
+# =========================
+alembic/__pycache__/
+
+# =========================
+# IDE / Editors
+# =========================
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Docker / local volumes
+# =========================
+docker-data/
+postgres_data/
+mysql_data/
+
+# =========================
+# Temporary / backups
+# =========================
+*.bak
+*.tmp
+*.temp

@@ -12,6 +12,7 @@ class Settings(BaseSettings):
         env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
+        env_parse_delimiter=",",
     )
 
     app_name: str = "Digicheese API"
@@ -19,9 +20,9 @@ class Settings(BaseSettings):
     debug: bool = False
 
     # Database
-    database_url: AnyUrl = Field(
-        default="postgresql+psycopg://digicheese:digicheese@localhost:5433/digicheese"
-    )
+    database_url: str = Field(
+    default="mysql+pymysql://digicheese:digicheese@localhost:3306/digicheese"
+)
 
     # Auth / JWT
     # Default value is long enough to satisfy validation but MUST be overridden in production.

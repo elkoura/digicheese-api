@@ -94,6 +94,6 @@ def get_current_admin(current_user: User = Depends(require_role(UserRole.admin))
     return current_user
 
 
-def get_current_employee(current_user: User = Depends(require_role(UserRole.employee, UserRole.admin))) -> User:
+def get_current_active_user(current_user: User = Depends(require_role(UserRole.employee, UserRole.admin))) -> User:
     """Retourne l'utilisateur employé ou admin courant."""
     return current_user
