@@ -63,3 +63,35 @@
 }  
 
 ***
+
+## 3. Tests des droits administrateur.  
+**Prérequis**: Authentification d'un admin réussie et récupération de l'access token.  Injection de l'access token dans swagger (Authorize).  
+
+NON IMPLEMENTE...  
+
+***
+
+## Création d'un client en tant qu'Admin.  
+**Prérequis**: Authentification d'un admin réussie et récupération de l'access token.  Injection de l'access token dans swagger (Authorize).
+**Méthode**: POST  
+**Endpoint**: /api/colis/clients  
+**Payload**:
+{
+  "nom": "NOM_CLIENT",
+  "prenom": "PRENOM_CLIENT",
+  "email": "EMAIL_CLIENT",
+  "newsletter": true or false
+}  
+**Résultat attendu**: Code 201 - Création d'un client.  
+**Résultat obtenu**: Client créé. 
+{
+  "id": 1,
+  "nom": "client",
+  "prenom": "premier",
+  "email": "client1@example.com",
+  "newsletter": false
+}  
+**Vérification**: SQL: SELECT * FROM clients;
+
+***
+
