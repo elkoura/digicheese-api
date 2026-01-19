@@ -126,6 +126,29 @@
   "updated_at": "2026-01-19T10:49:09"
 }  
 
+### 3.4 Modifier les informations d'un utilisateur.  
+**Méthode**: PUT  
+**Endpoint**: /api/admin/users/{id}  
+**Payload**: 
+{
+  "email": "EMAIL_UTILISATEUR",
+  "idUtil": "ID_UTILISATEUR",
+  "nomUtil": "NOM_UTILISATEUR",
+  "is_active": true or false
+}  
+**Résultat attendu**: Code 200 - Informations utilisateur modifiées.  
+**Résultat obtenu**: Informations utilisateur modifiées.
+{
+  "email": "user@example.com",
+  "idUtil": "string",
+  "nomUtil": "updateUser2",
+  "id": 2,
+  "is_active": true,
+  "role": "client",
+  "created_at": "2026-01-19T12:37:03",
+  "updated_at": "2026-01-19T13:04:48"
+}
+
 ***
 
 ## Création d'un client en tant qu'Admin.  
