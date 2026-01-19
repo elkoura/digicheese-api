@@ -109,6 +109,23 @@
   "updated_at": "2026-01-19T12:37:03"
 }  
 
+
+### 3.3 Obtenir les détails d'un utilisateur.  
+**Méthode**: GET  
+**Endpoint**: /api/admin/users/{id}  
+**Résultat attendu**: Informations de l'utilisateur selon son identifiant.  
+**Résultat obtenu**: 
+{
+  "email": "admin@example.com",
+  "idUtil": "ADMIN001",
+  "nomUtil": "Administrateur principal",
+  "id": 1,
+  "is_active": true,
+  "role": "admin",
+  "created_at": "2026-01-19T10:49:09",
+  "updated_at": "2026-01-19T10:49:09"
+}  
+
 ***
 
 ## Création d'un client en tant qu'Admin.  
