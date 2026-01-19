@@ -16,17 +16,17 @@
 
 
 ### 1.1 Création du premier utilisateur avec rôle par défaut.
-**Méthode** : POST
-**Endpoint**: /api/auth/register
+**Méthode** : POST  
+**Endpoint**: /api/auth/register  
 **Payload**: 
 {
   "email": "admin@example.com",
   "idUtil": "ADMIN001",
   "nomUtil": "Administrateur principal",
   "password": "ADMIN12345"
-}
-**Résultat attendu**: Utilisateur créé avec rôle "Client" par défaut
-**Résultat obtenu**: Code 201
+}  
+**Résultat attendu**: Utilisateur créé avec rôle "Client" par défaut  
+**Résultat obtenu**: Code 201 - 
 {
   "email": "admin@example.com",
   "idUtil": "ADMIN001",
@@ -36,12 +36,30 @@
   "role": "client",
   "created_at": "2026-01-19T10:49:09",
   "updated_at": "2026-01-19T10:49:09"
-}
+}   
 
 ### 1.2 Modification du rôle directement dans la base de données.
-**Action** directe sur la base de données - SQL.
-UPDATE users SET role = 'admin' WHERE idUtil = 'ADMIN001';
-**Résultat attendu**: Rôle modifié en "admin"
-**Vérification**: SELECT idUtil, role FROM users WHERE idUtil = 'ADMIN001';
+**Action** directe sur la base de données - SQL: UPDATE users SET role = 'admin' WHERE idUtil = 'ADMIN001';  
+**Résultat attendu**: Rôle modifié en "admin"  
+**Vérification**: SELECT idUtil, role FROM users WHERE idUtil = 'ADMIN001';  
 
+***
 
+## 2. Authentification – Connexion administrateur.
+**Prérequis**: Utilisateur "admin" créé et rôle modifié en base de données (étape 1).  
+**Méthode**: POST  
+**Endpoint**: /api/auth/login  
+**Payload**:
+{
+  "email": "admin@example.com",
+  "password": "ADMIN12345"
+}  
+**Résultat attendu**: Authentification réussie et récupération d'un access token et refresh token.  
+**Résultat obtenu**: Code 200 - 
+{
+  "access_token": "ACCESS_TOKEN",
+  "refresh_token": "REFRESH_TOKEN",
+  "token_type": "bearer"
+}  
+
+***
