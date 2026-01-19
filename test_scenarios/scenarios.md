@@ -95,3 +95,23 @@ NON IMPLEMENTE...
 
 ***
 
+## Création d'une commande en tant qu'Admin.  
+**Prérequis**: Authentification d'un admin réussie et récupération de l'access token.  Injection de l'access token dans swagger (Authorize).  
+**Methode**: POST  
+**Endpoint**: /api/colis/commandes  
+**Payload**:
+{
+  "client_id": 0,
+  "adresse": {
+    "ligne1": "string",
+    "ligne2": "string",
+    "ligne3": "string",
+    "commune_id": 0
+  },
+  "commentaire": "string"
+}  
+**Résultat attendu**: Code 201 - Commande créée.  
+**Résultat obtenu**: ERREUR COMMUNE...  MODIFICATION EN COURS...  
+
+***
+
