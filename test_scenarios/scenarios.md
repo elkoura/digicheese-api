@@ -149,6 +149,13 @@
   "updated_at": "2026-01-19T13:04:48"
 }
 
+### 3.5 Suppression d'un utilisateur.  
+**Méthode**: DELETE  
+**Endpoint**: /api/admin/users/{id}  
+**Résultat attendu**: Code 204 - Suppression de l'utilisateur.  
+**Résultat obtenu**: Utilisateur supprimé de la base de données.  
+  
+
 ***
 
 ## Création d'un client en tant qu'Admin.  
