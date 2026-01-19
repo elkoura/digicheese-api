@@ -86,8 +86,28 @@
   }
 ]  
 
-
-NON IMPLEMENTE...  
+### 3.2 Création d'un utilisateur.  
+**Méthode**: POST  
+**Endpoint**: /api/admin/users  
+**Payload**: 
+{
+  "email": "EMAIL_UTILISATEUR",
+  "idUtil": "1",
+  "nomUtil": "NOM_UTILISATEUR",
+  "password": "PASSWORD_UTILISATEUR"
+}  
+**Résultat attendu**: Code 201 - Utilisateur créé.  
+**Résultat obtenu**: Utilisateur créé avec succès. 
+{
+  "email": "user1@example.com",
+  "idUtil": "1",
+  "nomUtil": "user1",
+  "id": 2,
+  "is_active": true,
+  "role": "client",
+  "created_at": "2026-01-19T12:37:03",
+  "updated_at": "2026-01-19T12:37:03"
+}  
 
 ***
 
