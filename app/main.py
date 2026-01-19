@@ -13,7 +13,7 @@ from app.core.config import get_settings
 from app.core.exceptions import global_exception_handler
 from app.core.logging import get_logger, setup_logging
 from app.routers import auth_router, health_router
-from app.routers import auth_router, health_router, colis_router
+from app.routers import auth_router, health_router, colis_router, admin_router
 
 
 
@@ -63,6 +63,7 @@ def create_app() -> FastAPI:
     app.include_router(health_router, prefix=settings.api_prefix)
     app.include_router(auth_router, prefix=settings.api_prefix)
     app.include_router(colis_router, prefix=settings.api_prefix)
+    app.include_router(admin_router, prefix=settings.api_prefix)
 
     return app
 
