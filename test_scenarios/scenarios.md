@@ -1,0 +1,47 @@
+# Scénarios de tests manuels - API Digicheese
+
+**Projet** : Refonte SI gestion cadeaux fidélité - Fromagerie DIGICHEES  
+**Environnement** : Local (FastAPI + MySQL/MariaDB)  
+**Outil principal** : Swagger UI[](http://127.0.0.1:8000/docs)
+**Prérequis**  
+- Serveur lancé : `uvicorn app.main:app --reload`  
+- Fichier `.env` avec `AUTO_CREATE_TABLES=true`  
+- Base de données vide au démarrage des tests (tables créées automatiquement par SQLAlchemy au premier lancement)
+
+
+
+## 1. Création du premier utilisateur et passage en rôle administrateur.
+
+**Objectif** : Disposer d’un compte administrateur pour tester toutes les fonctionnalités.
+
+
+### 1.1 Création du premier utilisateur avec rôle par défaut.
+**Méthode** : POST
+**Endpoint**: /api/auth/register
+**Payload**: 
+{
+  "email": "admin@example.com",
+  "idUtil": "ADMIN001",
+  "nomUtil": "Administrateur principal",
+  "password": "ADMIN12345"
+}
+**Résultat attendu**: Utilisateur créé avec rôle "Client" par défaut
+**Résultat obtenu**: Code 201
+{
+  "email": "admin@example.com",
+  "idUtil": "ADMIN001",
+  "nomUtil": "Administrateur principal",
+  "id": 1,
+  "is_active": true,
+  "role": "client",
+  "created_at": "2026-01-19T10:49:09",
+  "updated_at": "2026-01-19T10:49:09"
+}
+
+### 1.2 Modification du rôle directement dans la base de données.
+**Action** directe sur la base de données - SQL.
+UPDATE users SET role = 'admin' WHERE idUtil = 'ADMIN001';
+**Résultat attendu**: Rôle modifié en "admin"
+**Vérification**: SELECT idUtil, role FROM users WHERE idUtil = 'ADMIN001';
+
+
