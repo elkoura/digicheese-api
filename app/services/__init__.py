@@ -1,0 +1,31 @@
+from app.services.auth_service import (
+    authenticate_user,
+    create_access_token,
+    create_refresh_token,
+    create_user,
+    decode_token,
+    get_password_hash,
+    get_user_by_email,
+    get_user_by_id,
+    get_refresh_token,
+    is_refresh_token_valid,
+    revoke_refresh_token,
+    save_refresh_token,
+    verify_password,
+)
+
+__all__ = [
+    "authenticate_user",
+    "create_access_token",
+    "create_refresh_token",
+    "create_user",
+    "decode_token",
+    "get_password_hash",
+    "get_user_by_email",
+    "get_user_by_id",
+    "get_refresh_token",
+    "is_refresh_token_valid",
+    "revoke_refresh_token",
+    "save_refresh_token",
+    "verify_password",
+]

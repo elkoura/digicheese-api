@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: digicheese
+      POSTGRES_PASSWORD: digicheese
+      POSTGRES_DB: digicheese
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U digicheese -d digicheese"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: .
+    environment:
+      # Override in a local .env if needed
+      DATABASE_URL: postgresql+psycopg://digicheese:digicheese@db:5432/digicheese
+      JWT_SECRET_KEY: CHANGE_ME
+      DEBUG: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+volumes:
+  postgres_data:
