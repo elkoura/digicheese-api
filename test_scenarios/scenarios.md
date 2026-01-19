@@ -67,6 +67,26 @@
 ## 3. Tests des droits administrateur.  
 **Prérequis**: Authentification d'un admin réussie et récupération de l'access token.  Injection de l'access token dans swagger (Authorize).  
 
+### 3.1 Lister les utilisateurs.  
+**Méthode**: GET  
+**Endpoint**: /api/admin/users  
+**Payload**: aucun paramètre  
+**Résultat attendu**: Code 200 - Liste des utilisateurs.  
+**Résultat obtenu**: Liste des utilisateurs. 
+[
+  {
+    "email": "admin@example.com",
+    "idUtil": "ADMIN001",
+    "nomUtil": "Administrateur principal",
+    "id": 1,
+    "is_active": true,
+    "role": "admin",
+    "created_at": "2026-01-19T10:49:09",
+    "updated_at": "2026-01-19T10:49:09"
+  }
+]  
+
+
 NON IMPLEMENTE...  
 
 ***
