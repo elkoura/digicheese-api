@@ -36,6 +36,10 @@ def update_client(db: Session, client: Client, data: dict) -> Client:
     db.refresh(client)
     return client
 
+def delete_client(db: Session, client: Client) -> None:
+    db.delete(client)
+    db.commit()
+
 
 # ----------------------------
 # COMMANDES
@@ -98,6 +102,12 @@ def update_statut(db: Session, commande: Commande, statut: StatutCommande) -> Co
 
 def update_suivi(db: Session, commande: Commande, num_suivi: str) -> Commande:
     commande.num_suivi = num_suivi
+    db.commit()
+    db.refresh(commande)
+    return commande
+
+def cancel_commande(db: Session, commande: Commande) -> Commande:
+    commande.statut = StatutCommande.ANNULEE
     db.commit()
     db.refresh(commande)
     return commande

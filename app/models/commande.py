@@ -15,6 +15,7 @@ class StatutCommande(str, enum.Enum):
     PRETE = "PRETE"
     DEPOSEE = "DEPOSEE"
     LIVREE = "LIVREE"
+    ANNULEE = "ANNULEE"
 
 
 class Commande(Base):
