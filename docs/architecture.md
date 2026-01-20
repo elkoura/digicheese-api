@@ -76,7 +76,7 @@ Endpoints disponibles :
 
 - `get_current_user` : Récupère l'utilisateur depuis le token JWT
 - `get_current_admin` : Vérifie le rôle admin
-- `get_current_active_user` : Vérifie le rôle employee ou admin
+- `get_current_op_colis` : Vérifie le rôle opératuer ou admin
 - `require_role` : Factory pour vérifier des rôles spécifiques
 
 ## Conventions pour les autres étudiants

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.dependencies import get_current_active_user
+from app.core.dependencies import get_current_op_colis
 from app.db.session import get_db
 from app.schemas.client import ClientCreate, ClientRead, ClientUpdate
 from app.schemas.commande import CommandeCreate, CommandeRead, CommandeUpdate, LigneCommandeRead, LigneCommandeCreate, LigneCommandeUpdate, CommandeStatutUpdate, CommandeSuiviUpdate
@@ -17,7 +17,7 @@ router = APIRouter(prefix="/colis", tags=["colis"])
 def create_client(
     payload: ClientCreate,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     return colis_service.create_client(
         db,
@@ -29,12 +29,12 @@ def create_client(
 
 
 @router.get("/clients", response_model=list[ClientRead])
-def list_clients(db: Session = Depends(get_db), _=Depends(get_current_active_user)):
+def list_clients(db: Session = Depends(get_db), _=Depends(get_current_op_colis)):
     return colis_service.list_clients(db)
 
 
 @router.get("/clients/{client_id}", response_model=ClientRead)
-def get_client(client_id: int, db: Session = Depends(get_db), _=Depends(get_current_active_user)):
+def get_client(client_id: int, db: Session = Depends(get_db), _=Depends(get_current_op_colis)):
     client = colis_service.get_client(db, client_id)
     if not client:
         raise HTTPException(status_code=404, detail="Client not found")
@@ -46,7 +46,7 @@ def update_client(
     client_id: int,
     payload: ClientUpdate,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     client = colis_service.get_client(db, client_id)
     if not client:
@@ -57,7 +57,7 @@ def update_client(
 
 
 @router.delete("/clients/{client_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_client(client_id: int, db: Session = Depends(get_db), _=Depends(get_current_active_user)):
+def delete_client(client_id: int, db: Session = Depends(get_db), _=Depends(get_current_op_colis)):
     client = colis_service.get_client(db, client_id)
     if not client:
         raise HTTPException(status_code=404, detail="Client not found")
@@ -72,7 +72,7 @@ def delete_client(client_id: int, db: Session = Depends(get_db), _=Depends(get_c
 def create_commande(
     payload: CommandeCreate,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     try:
         commande = colis_service.create_commande(
@@ -104,7 +104,7 @@ def create_commande(
         raise HTTPException(status_code=400, detail="Bad request")
     
 @router.get("/commandes", response_model=list[CommandeRead])
-def list_commandes(db: Session = Depends(get_db), _=Depends(get_current_active_user)):
+def list_commandes(db: Session = Depends(get_db), _=Depends(get_current_op_colis)):
     commandes = colis_service.list_commandes(db)
 
     # On renvoie le poids_total calculé pour chaque commande
@@ -130,7 +130,7 @@ def list_commandes(db: Session = Depends(get_db), _=Depends(get_current_active_u
 
 
 @router.get("/commandes/{commande_id}", response_model=CommandeRead)
-def get_commande(commande_id: int, db: Session = Depends(get_db), _=Depends(get_current_active_user)):
+def get_commande(commande_id: int, db: Session = Depends(get_db), _=Depends(get_current_op_colis)):
     commande = colis_service.get_commande(db, commande_id)
     if not commande:
         raise HTTPException(status_code=404, detail="Commande not found")
@@ -156,7 +156,7 @@ def update_commande(
     commande_id: int,
     payload: CommandeUpdate,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     commande = colis_service.get_commande(db, commande_id)
     if not commande:
@@ -185,7 +185,7 @@ def update_commande(
 def cancel_commande(
     commande_id: int,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     commande = colis_service.get_commande(db, commande_id)
     if not commande:
@@ -200,7 +200,7 @@ def add_ligne(
     commande_id: int,
     payload: LigneCommandeCreate,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     commande = colis_service.get_commande(db, commande_id)
     if not commande:
@@ -235,7 +235,7 @@ def update_ligne(
     ligne_id: int,
     payload: LigneCommandeUpdate,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     commande = colis_service.get_commande(db, commande_id)
     if not commande:
@@ -267,7 +267,7 @@ def delete_ligne(
     commande_id: int,
     ligne_id: int,
     db: Session = Depends(get_db),
-    _=Depends(get_current_active_user),
+    _=Depends(get_current_op_colis),
 ):
     commande = colis_service.get_commande(db, commande_id)
     if not commande:

@@ -11,8 +11,8 @@ from app.db.base import Base
 
 class UserRole(str, enum.Enum):
     admin = "admin"
-    employee = "employee"
-    client = "client"
+    op_colis = "op-colis"
+    op_stocks = "op-stocks"
 
 
 class User(Base):
@@ -35,10 +35,10 @@ class User(Base):
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     role: Mapped[UserRole] = mapped_column(
-        Enum(UserRole, name="user_role"),
-        nullable=False,
-        default=UserRole.client,
-    )
+    Enum(UserRole, name="user_role"),
+    nullable=False,
+    default=UserRole.op_colis,  # ✅ au lieu de client
+)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), nullable=False

@@ -93,13 +93,15 @@ def authenticate_user(db: Session, email: str, password: str) -> User | None:
 def create_user(db: Session, user_create: dict) -> User:
     """Crée un nouvel utilisateur."""
     hashed_password = get_password_hash(user_create["password"])
+
     db_user = User(
         email=user_create["email"],
         idUtil=user_create.get("idUtil"),
         nomUtil=user_create.get("nomUtil"),
         hashed_password=hashed_password,
-        role=user_create.get("role", UserRole.client),
+        role=user_create.get("role", UserRole.op_colis),  # ✅ default op-colis
     )
+
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

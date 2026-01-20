@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.dependencies import get_current_active_user
+from app.core.dependencies import get_current_op_colis
 from app.core.logging import get_logger
 from app.db.session import get_db
 from app.models.user import User
@@ -126,6 +126,6 @@ def refresh_token(request: RefreshTokenRequest, db: Session = Depends(get_db)) -
 
 
 @router.get("/me", response_model=UserRead)
-def get_current_user_info(current_user: User = Depends(get_current_active_user)) -> UserRead:
+def get_current_user_info(current_user: User = Depends(get_current_op_colis)) -> UserRead:
     """Retourne les informations de l'utilisateur courant."""
     return UserRead.model_validate(current_user)
