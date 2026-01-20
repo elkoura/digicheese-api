@@ -3,17 +3,23 @@ from __future__ import annotations
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-
+from app.db.base import engine
 from app.core.config import get_settings
 from app.core.exceptions import global_exception_handler
 from app.core.logging import get_logger, setup_logging
-from app.routers import auth_router, health_router
-from app.routers.admin_communes import router as admin_communes_router
+from app.routers import auth_router, health_router, admin_communes
+from app.routers.admin_object import router as object_router
+from app.routers import admin_conditionnements
+
 
 app = FastAPI(title="API Admin CdC")
 
-app.include_router(admin_communes_router)
+app.include_router(admin_communes.router)
 logger = get_logger(__name__)
+@app.on_event("startup")
+def test_db():
+    engine.connect().close()
+    print("✅ Connexion MySQL OK")
 
 
 def create_app() -> FastAPI:
@@ -51,6 +57,9 @@ def create_app() -> FastAPI:
     app.include_router(health_router, prefix=settings.api_prefix)
     app.include_router(auth_router, prefix=settings.api_prefix)
     app.include_router(admin_communes.router)
+    app.include_router(object_router)
+    
+
     return app
 
 
