@@ -50,9 +50,9 @@ class Commande(Base):
     nullable=True
 )
 
-conditionnement = relationship("Conditionnement", back_populates="commandes")
+    conditionnement = relationship("Conditionnement", back_populates="commandes")
 
-mouvements = relationship(
+    mouvements = relationship(
     "MouvementColis",
     back_populates="commande",
     cascade="all, delete-orphan"
