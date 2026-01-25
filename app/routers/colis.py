@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from app.core.dependencies import get_current_op_colis
 from app.db.session import get_db
 from app.schemas.client import ClientCreate, ClientRead, ClientUpdate
-from app.schemas.commande import CommandeCreate, CommandeRead, CommandeUpdate, LigneCommandeRead, LigneCommandeCreate, LigneCommandeUpdate, CommandeStatutUpdate, CommandeSuiviUpdate
+from app.schemas.commande import CommandeCreate, CommandeRead, CommandeUpdate, LigneCommandeCreate, LigneCommandeUpdate, CommandeStatutUpdate, CommandeSuiviUpdate
 from app.services import colis_service
 
 router = APIRouter(prefix="/colis", tags=["colis"])
@@ -81,7 +81,6 @@ def create_commande(
             adresse_data=payload.adresse.model_dump(),
             commentaire=payload.commentaire,
         )
-
         poids_total = colis_service.compute_poids_total(db, commande)
 
         return CommandeRead.model_validate(
