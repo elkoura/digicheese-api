@@ -11,8 +11,8 @@ from app.db.base import Base
 
 class UserRole(str, enum.Enum):
     admin = "admin"
-    op_colis = "op-colis"
-    op_stocks = "op-stocks"
+    op_colis = "op_colis"
+    op_stocks = "op_stocks"
 
 
 class User(Base):

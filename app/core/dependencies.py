@@ -92,14 +92,14 @@ def get_current_admin(current_user: User = Depends(require_role(UserRole.admin))
     return current_user
 
 
-# ✅ OP-COLIS ou ADMIN
+# ✅ op_colis ou ADMIN
 def get_current_op_colis(
     current_user: User = Depends(require_role(UserRole.op_colis, UserRole.admin)),
 ) -> User:
     return current_user
 
 
-# ✅ OP-STOCKS ou ADMIN
+# ✅ op_colis ou ADMIN
 def get_current_op_stocks(
     current_user: User = Depends(require_role(UserRole.op_stocks, UserRole.admin)),
 ) -> User:

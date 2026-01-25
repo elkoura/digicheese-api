@@ -38,7 +38,7 @@ def test_register_user(client: TestClient, db: Session) -> None:
     assert data["email"] == "newuser@example.com"
     assert data["idUtil"] == "NEW001"
     assert data["nomUtil"] == "New User"
-    assert data["role"] == "op-colis"
+    assert data["role"] == "op_colis"
     assert "password" not in data
 
 

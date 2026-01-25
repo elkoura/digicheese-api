@@ -5,6 +5,8 @@ from datetime import datetime
 
 from sqlalchemy import DateTime, Enum, ForeignKey, Integer, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from app.models.conditionnement import Conditionnement  
+
 
 from app.db.base import Base
 
@@ -43,3 +45,15 @@ class Commande(Base):
     adresse = relationship("Adresse", back_populates="commandes")
 
     lignes = relationship("DetailCommande", back_populates="commande", cascade="all, delete-orphan")
+    conditionnement_id: Mapped[int | None] = mapped_column(
+    ForeignKey("conditionnements.id"),
+    nullable=True
+)
+
+    conditionnement = relationship("Conditionnement", back_populates="commandes")
+
+    mouvements = relationship(
+    "MouvementColis",
+    back_populates="commande",
+    cascade="all, delete-orphan"
+)
