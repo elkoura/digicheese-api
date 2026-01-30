@@ -90,7 +90,8 @@ def authenticate_user(db: Session, email: str, password: str) -> User | None:
     return user
 
 
-def create_user(db: Session, user_create: dict) -> User:
+""" TO DELETE -------------------------------------------------------------------------
+    def create_user(db: Session, user_create: dict) -> User:
     """Crée un nouvel utilisateur."""
     hashed_password = get_password_hash(user_create["password"])
 
@@ -106,7 +107,7 @@ def create_user(db: Session, user_create: dict) -> User:
     db.commit()
     db.refresh(db_user)
     return db_user
-
+ ---------------------------------------------------------------------------------"""
 
 def save_refresh_token(db: Session, user_id: int, jti: str, expires_at: datetime) -> RefreshToken:
     """Enregistre un refresh token en base."""

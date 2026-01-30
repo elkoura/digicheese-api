@@ -3,6 +3,8 @@ from app.services.auth_service import (
     create_access_token,
     create_refresh_token,
     create_user,
+    update_user,
+    delete_user,
     decode_token,
     get_password_hash,
     get_user_by_email,
@@ -12,6 +14,8 @@ from app.services.auth_service import (
     revoke_refresh_token,
     save_refresh_token,
     verify_password,
+    list_users,
+    list_roles
 )
 
 __all__ = [
@@ -19,6 +23,8 @@ __all__ = [
     "create_access_token",
     "create_refresh_token",
     "create_user",
+    "update_user",
+    "delete_user",
     "decode_token",
     "get_password_hash",
     "get_user_by_email",
@@ -28,4 +34,6 @@ __all__ = [
     "revoke_refresh_token",
     "save_refresh_token",
     "verify_password",
+    "list_users",
+    "list_roles"
 ]
