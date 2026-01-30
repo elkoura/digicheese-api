@@ -64,7 +64,7 @@ def get_current_user(
 
     return user
 
-
+""" TO DELETE ------------------------------------------------------------------------------------------------------ 
 def require_role(*allowed_roles: UserRole):
     """Fabrique une dépendance qui exige un rôle donné."""
 
@@ -80,7 +80,18 @@ def require_role(*allowed_roles: UserRole):
         return current_user
 
     return role_checker
+ ---------------------------------------------------------------------------------------------------------------"""
 
+ def require_roles(allowed_roles: RoleName):
+    def role_checker(current_user: User = Depends(get_current_user)) -> User:
+        user_roles_names = {role.value for role in current_user.roles}
+        allowed_role_values = {role.value for role in allowed_roles}
+
+        if not user_roles_names.intersection(allowed_role_values):
+            logger.warning(f"User {current_user.id} attempt access with roles {user_role_names}, required: {allowed_role_values}")
+            raise HTTPException(status_code HTTP_403_FORBIDDEN, detail="Insufficient permission")
+        return current_user
+    return role_checker
 
 # ✅ Authentifié (peu importe le rôle)
 def get_current_active_user(current_user: User = Depends(get_current_user)) -> User:
@@ -88,11 +99,24 @@ def get_current_active_user(current_user: User = Depends(get_current_user)) -> U
 
 
 # ✅ ADMIN seulement
-def get_current_admin(current_user: User = Depends(require_role(UserRole.admin))) -> User:
+""" def get_current_admin(current_user: User = Depends(require_role(UserRole.admin))) -> User:
+    return current_user """
+
+def get_current_admin(current_user: User = Depends(require_roles(RoleName.admin))) -> User:
+    return current_user
+
+# ✅ op_colis seulement
+def get_current_op_colis(current_user: User = Depends(require_roles(RoleName.op_colis))) -> User:
+    return current_user
+
+# ✅ op_stocks seulement
+def get_current_op_stocks(current_user: User = Depends(require_roles(RoleName.op_stocks))) -> User:
     return current_user
 
 
-# ✅ op_colis ou ADMIN
+
+
+""" # ✅ op_colis ou ADMIN
 def get_current_op_colis(
     current_user: User = Depends(require_role(UserRole.op_colis, UserRole.admin)),
 ) -> User:
@@ -103,4 +127,4 @@ def get_current_op_colis(
 def get_current_op_stocks(
     current_user: User = Depends(require_role(UserRole.op_stocks, UserRole.admin)),
 ) -> User:
-    return current_user
+    return current_user """
