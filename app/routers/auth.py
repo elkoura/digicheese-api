@@ -26,7 +26,7 @@ logger = get_logger(__name__)
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-
+""" TO DELETE -------------------------------------------------------------------------
 @router.post("/register", response_model=UserRead, status_code=status.HTTP_201_CREATED)
 def register(user_data: UserCreate, db: Session = Depends(get_db)) -> UserRead:
     """Inscrit un nouvel utilisateur."""
@@ -43,7 +43,7 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)) -> UserRead:
     user = create_user(db, user_dict)
     logger.info(f"User registered: {user.email} (ID: {user.id})")
     return UserRead.model_validate(user)
-
+ ------------------------------------------------------------------------------------"""
 
 @router.post("/login", response_model=Token)
 def login(credentials: UserLogin, db: Session = Depends(get_db)) -> Token:
@@ -57,8 +57,11 @@ def login(credentials: UserLogin, db: Session = Depends(get_db)) -> Token:
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    # Récupération des rôles
+    role_names = [role.value for role in user.roles]
+
     # Create access token
-    access_token = create_access_token(data={"sub": user.id, "email": user.email, "role": user.role.value})
+    access_token = create_access_token(data={"sub": user.id, "email": user.email, "roles": role_names})
 
     # Create refresh token
     refresh_token_str, jti = create_refresh_token(user.id)
@@ -108,11 +111,14 @@ def refresh_token(request: RefreshTokenRequest, db: Session = Depends(get_db)) -
         if not user or not user.is_active:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="User not found or inactive",
+                detail="User not found or
+                 inactive",
             )
 
+        role_names = [role.value for role in user.roles]
+
         # Create new access token
-        access_token = create_access_token(data={"sub": user.id, "email": user.email, "role": user.role.value})
+        access_token = create_access_token(data={"sub": user.id, "email": user.email, "roles": role_names})
 
         logger.info(f"Token refreshed for user: {user.email} (ID: {user.id})")
         return Token(access_token=access_token, refresh_token=request.refresh_token)
@@ -126,6 +132,6 @@ def refresh_token(request: RefreshTokenRequest, db: Session = Depends(get_db)) -
 
 
 @router.get("/me", response_model=UserRead)
-def get_current_user_info(current_user: User = Depends(get_current_op_colis)) -> UserRead:
+def get_current_user_info(current_user: User = Depends(get_current_active_user)) -> UserRead:
     """Retourne les informations de l'utilisateur courant."""
     return UserRead.model_validate(current_user)
