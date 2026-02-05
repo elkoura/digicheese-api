@@ -15,10 +15,10 @@ jobs:
                 ports:
                     - 3306:3306
                 options: >-
-                    --health-cmd="mysqladmin ping -h 127.0.0.1 -proot --silent"
+                    --health-cmd="mysqladmin ping -uroot -proot --silent"
                     --health-interval=10s
                     --health-timeout=5s
-                    --health-retries=30
+                    --health-retries=10
 
         steps:
             - name: Checkout
@@ -35,13 +35,15 @@ jobs:
                   pip install -r requirements.txt
                   pip install flake8 pylint radon pytest
 
-            # (optionnel mais utile) attendre MySQL
+            - name: Create reports folder
+              run: mkdir -p reports/quality
+
             - name: Wait for MySQL
               run: |
                   sudo apt-get update
                   sudo apt-get install -y mysql-client
                   for i in {1..30}; do
-                    mysqladmin ping -h 127.0.0.1 -proot --silent && break
+                    mysqladmin ping -h 127.0.0.1 -uroot -proot --silent && break
                     echo "Waiting for MySQL..."
                     sleep 2
                   done
@@ -54,13 +56,11 @@ jobs:
 
             - name: Run radon complexity
               run: |
-                  mkdir -p reports/quality
                   radon cc app/ -a > reports/quality/radon_cc.txt
                   radon mi app/ -s > reports/quality/radon_mi.txt
 
             - name: Run unit tests
               env:
-                  # IMPORTANT: ton conftest lit TEST_DATABASE_URL
                   TEST_DATABASE_URL: mysql+pymysql://root:root@127.0.0.1:3306/digicheese_test
               run: |
                   pytest -q --maxfail=1 --disable-warnings --junitxml=reports/quality/pytest-report.xml
