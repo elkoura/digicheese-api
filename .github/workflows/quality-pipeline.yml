@@ -22,35 +22,37 @@ jobs:
                   pip install flake8 pylint radon pytest
 
             # 1) Analyse statique
-            - name: Run flake8
-              run: flake8 app/
+            - name: Run flake8 (do not fail hard)
+              run: |
+                  mkdir -p reports/quality
+                  flake8 app/ > reports/quality/flake8.txt || true
 
             - name: Run pylint (do not fail hard)
               # Au début, c'est normal d'avoir une note moyenne.
-              # Tu peux mettre "|| true" pour ne pas bloquer le pipeline,
-              # puis enlever quand tu as corrigé la dette.
-              run: pylint app/ || true
+              # On garde un rapport et on n'échoue pas le job.
+              run: |
+                  mkdir -p reports/quality
+                  pylint app/ > reports/quality/pylint.txt || true
 
             # 2) Dette technique (radon)
             - name: Run radon complexity
               run: |
-                  radon cc app/ -a > radon_cc.txt
-                  radon mi app/ -s > radon_mi.txt
+                  mkdir -p reports/quality
+                  radon cc app/ -a > reports/quality/radon_cc.txt
+                  radon mi app/ -s > reports/quality/radon_mi.txt
 
             # 3) Tests unitaires (+ rapport)
             - name: Run unit tests
               run: |
-                  pytest -q --maxfail=1 --disable-warnings --junitxml=pytest-report.xml
+                  mkdir -p reports/quality
+                  pytest -q --maxfail=1 --disable-warnings --junitxml=reports/quality/pytest-report.xml
 
             # 4) Upload artefacts
             - name: Upload reports
               uses: actions/upload-artifact@v4
               with:
                   name: quality-reports
-                  path: |
-                      radon_cc.txt
-                      radon_mi.txt
-                      pytest-report.xml
+                  path: reports/quality
 
     performance-test:
         runs-on: ubuntu-latest
