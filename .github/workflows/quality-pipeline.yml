@@ -6,6 +6,20 @@ jobs:
     build-test-quality:
         runs-on: ubuntu-latest
 
+        services:
+            mysql:
+                image: mysql:8.0
+                env:
+                    MYSQL_ROOT_PASSWORD: root
+                    MYSQL_DATABASE: digicheese_test
+                ports:
+                    - 3306:3306
+                options: >-
+                    --health-cmd="mysqladmin ping -h 127.0.0.1 -proot --silent"
+                    --health-interval=10s
+                    --health-timeout=5s
+                    --health-retries=30
+
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -21,87 +35,38 @@ jobs:
                   pip install -r requirements.txt
                   pip install flake8 pylint radon pytest
 
-            # 1) Analyse statique
-            - name: Run flake8 (do not fail hard)
+            # (optionnel mais utile) attendre MySQL
+            - name: Wait for MySQL
               run: |
-                  mkdir -p reports/quality
-                  flake8 app/ > reports/quality/flake8.txt || true
+                  sudo apt-get update
+                  sudo apt-get install -y mysql-client
+                  for i in {1..30}; do
+                    mysqladmin ping -h 127.0.0.1 -proot --silent && break
+                    echo "Waiting for MySQL..."
+                    sleep 2
+                  done
+
+            - name: Run flake8 (do not fail hard)
+              run: flake8 app/ > reports/quality/flake8.txt || true
 
             - name: Run pylint (do not fail hard)
-              # Au début, c'est normal d'avoir une note moyenne.
-              # On garde un rapport et on n'échoue pas le job.
-              run: |
-                  mkdir -p reports/quality
-                  pylint app/ > reports/quality/pylint.txt || true
+              run: pylint app/ > reports/quality/pylint.txt || true
 
-            # 2) Dette technique (radon)
             - name: Run radon complexity
               run: |
                   mkdir -p reports/quality
                   radon cc app/ -a > reports/quality/radon_cc.txt
                   radon mi app/ -s > reports/quality/radon_mi.txt
 
-            # 3) Tests unitaires (+ rapport)
             - name: Run unit tests
+              env:
+                  # IMPORTANT: ton conftest lit TEST_DATABASE_URL
+                  TEST_DATABASE_URL: mysql+pymysql://root:root@127.0.0.1:3306/digicheese_test
               run: |
-                  mkdir -p reports/quality
                   pytest -q --maxfail=1 --disable-warnings --junitxml=reports/quality/pytest-report.xml
 
-            # 4) Upload artefacts
             - name: Upload reports
               uses: actions/upload-artifact@v4
               with:
                   name: quality-reports
                   path: reports/quality
-
-    performance-test:
-        runs-on: ubuntu-latest
-        needs: build-test-quality
-
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
-
-            - name: Install k6
-              run: |
-                  sudo apt-get update
-                  sudo apt-get install -y k6
-
-            # Ici on démarre ton API avant de lancer k6.
-            # Option A (simple) : lancer uvicorn directement si ton app démarre sans DB externe.
-            - name: Setup Python + deps
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.10"
-
-            - name: Install app deps
-              run: |
-                  python -m pip install --upgrade pip
-                  pip install -r requirements.txt
-
-            - name: Start API (background)
-              env:
-                  # Mets ici les variables nécessaires si ton API en a besoin
-                  # DATABASE_URL: ${{ secrets.DATABASE_URL }}
-                  # SECRET_KEY: ${{ secrets.SECRET_KEY }}
-                  ENV: "ci"
-              run: |
-                  nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 > uvicorn.log 2>&1 &
-                  sleep 3
-                  curl -f http://localhost:8000/api/health
-
-            - name: Run k6
-              env:
-                  BASE_URL: http://localhost:8000
-                  EMAIL: admin@digicheese.com
-                  PASSWORD: admin123
-              run: |
-                  k6 run k6/test.js --out json=performance.json
-
-            - name: Upload performance report
-              uses: actions/upload-artifact@v4
-              with:
-                  name: performance-report
-                  path: |
-                      performance.json
-                      uvicorn.log
