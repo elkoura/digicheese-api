@@ -1,0 +1,158 @@
+app/core/config.py:6:1: F401 'pydantic.AnyUrl' imported but unused
+app/core/config.py:24:5: E122 continuation line missing indentation or outdented
+app/core/config.py:25:1: E122 continuation line missing indentation or outdented
+app/core/config.py:28:80: E501 line too long (94 > 79 characters)
+app/core/config.py:29:80: E501 line too long (85 > 79 characters)
+app/core/config.py:35:80: E501 line too long (86 > 79 characters)
+app/core/config.py:45:1: W391 blank line at end of file
+app/core/dependencies.py:74:80: E501 line too long (115 > 79 characters)
+app/core/dependencies.py:86:80: E501 line too long (84 > 79 characters)
+app/core/dependencies.py:91:80: E501 line too long (90 > 79 characters)
+app/core/dependencies.py:97:80: E501 line too long (82 > 79 characters)
+app/core/dependencies.py:104:80: E501 line too long (83 > 79 characters)
+app/core/dependencies.py:106:24: W292 no newline at end of file
+app/core/exceptions.py:11:80: E501 line too long (85 > 79 characters)
+app/core/logging.py:16:1: W391 blank line at end of file
+app/db/base.py:7:1: E303 too many blank lines (3)
+app/db/base.py:9:1: W391 blank line at end of file
+app/db/init_db.py:9:42: W292 no newline at end of file
+app/db/session.py:32:1: W391 blank line at end of file
+app/main.py:4:27: W291 trailing whitespace
+app/main.py:5:18: W291 trailing whitespace
+app/main.py:10:1: F401 'fastapi.responses.JSONResponse' imported but unused
+app/main.py:16:1: F811 redefinition of unused 'auth_router' from line 15
+app/main.py:16:1: F811 redefinition of unused 'health_router' from line 15
+app/main.py:21:1: E303 too many blank lines (4)
+app/main.py:30:9: E116 unexpected indentation (comment)
+app/main.py:36:80: E501 line too long (82 > 79 characters)
+app/main.py:52:80: E501 line too long (101 > 79 characters)
+app/main.py:56:80: E501 line too long (140 > 79 characters)
+app/main.py:70:1: E305 expected 2 blank lines after class or function definition, found 1
+app/main.py:73:1: F811 redefinition of unused 'app' from line 5
+app/main.py:74:1: W391 blank line at end of file
+app/models/__init__.py:11:1: F811 redefinition of unused 'User' from line 1
+app/models/__init__.py:12:1: F811 redefinition of unused 'RefreshToken' from line 2
+app/models/__init__.py:22:1: W293 blank line contains whitespace
+app/models/__init__.py:23:2: W292 no newline at end of file
+app/models/adresse.py:7:1: E302 expected 2 blank lines, found 1
+app/models/adresse.py:10:80: E501 line too long (82 > 79 characters)
+app/models/adresse.py:13:80: E501 line too long (81 > 79 characters)
+app/models/adresse.py:14:80: E501 line too long (81 > 79 characters)
+app/models/adresse.py:16:80: E501 line too long (84 > 79 characters)
+app/models/adresse.py:17:80: E501 line too long (86 > 79 characters)
+app/models/adresse.py:22:67: W292 no newline at end of file
+app/models/client.py:7:1: E302 expected 2 blank lines, found 1
+app/models/client.py:10:80: E501 line too long (82 > 79 characters)
+app/models/client.py:13:80: E501 line too long (80 > 79 characters)
+app/models/client.py:17:66: W292 no newline at end of file
+app/models/commande.py:8:1: F401 'app.models.conditionnement.Conditionnement' imported but unused
+app/models/commande.py:8:55: W291 trailing whitespace
+app/models/commande.py:39:80: E501 line too long (80 > 79 characters)
+app/models/commande.py:41:80: E501 line too long (84 > 79 characters)
+app/models/commande.py:42:80: E501 line too long (86 > 79 characters)
+app/models/commande.py:47:80: E501 line too long (100 > 79 characters)
+app/models/commande.py:49:5: E122 continuation line missing indentation or outdented
+app/models/commande.py:50:5: E122 continuation line missing indentation or outdented
+app/models/commande.py:51:1: E122 continuation line missing indentation or outdented
+app/models/commande.py:53:80: E501 line too long (81 > 79 characters)
+app/models/commande.py:56:5: E122 continuation line missing indentation or outdented
+app/models/commande.py:57:5: E122 continuation line missing indentation or outdented
+app/models/commande.py:58:5: E122 continuation line missing indentation or outdented
+app/models/commande.py:59:1: E122 continuation line missing indentation or outdented
+app/models/commande.py:59:2: W292 no newline at end of file
+app/models/commune.py:7:1: E302 expected 2 blank lines, found 1
+app/models/commune.py:10:80: E501 line too long (82 > 79 characters)
+app/models/commune.py:15:65: W292 no newline at end of file
+app/models/conditionnement.py:23:75: W292 no newline at end of file
+app/models/detail_commande.py:7:1: E302 expected 2 blank lines, found 1
+app/models/detail_commande.py:10:80: E501 line too long (82 > 79 characters)
+app/models/detail_commande.py:16:80: E501 line too long (88 > 79 characters)
+app/models/detail_commande.py:17:80: E501 line too long (82 > 79 characters)
+app/models/detail_commande.py:20:68: W292 no newline at end of file
+app/models/mouvement_colis.py:31:80: E501 line too long (88 > 79 characters)
+app/models/mouvement_colis.py:34:80: E501 line too long (86 > 79 characters)
+app/models/mouvement_colis.py:37:32: W292 no newline at end of file
+app/models/objet.py:7:1: E302 expected 2 blank lines, found 1
+app/models/objet.py:10:80: E501 line too long (82 > 79 characters)
+app/models/objet.py:19:71: W292 no newline at end of file
+app/models/prix.py:7:1: E302 expected 2 blank lines, found 1
+app/models/prix.py:10:80: E501 line too long (82 > 79 characters)
+app/models/prix.py:14:80: E501 line too long (95 > 79 characters)
+app/models/prix.py:15:57: W292 no newline at end of file
+app/models/refresh_token.py:20:80: E501 line too long (81 > 79 characters)
+app/models/refresh_token.py:21:80: E501 line too long (89 > 79 characters)
+app/models/refresh_token.py:27:1: W391 blank line at end of file
+app/models/user.py:34:80: E501 line too long (92 > 79 characters)
+app/models/user.py:36:80: E501 line too long (82 > 79 characters)
+app/models/user.py:38:5: E122 continuation line missing indentation or outdented
+app/models/user.py:39:5: E122 continuation line missing indentation or outdented
+app/models/user.py:40:5: E122 continuation line missing indentation or outdented
+app/models/user.py:41:1: E122 continuation line missing indentation or outdented
+app/models/user.py:59:1: W391 blank line at end of file
+app/routers/admin.py:2:1: F401 'fastapi.status' imported but unused
+app/routers/admin.py:9:80: E501 line too long (84 > 79 characters)
+app/routers/admin.py:13:1: E302 expected 2 blank lines, found 1
+app/routers/admin.py:20:1: E302 expected 2 blank lines, found 1
+app/routers/admin.py:31:1: E302 expected 2 blank lines, found 1
+app/routers/admin.py:41:1: E302 expected 2 blank lines, found 1
+app/routers/admin.py:51:1: W293 blank line contains whitespace
+app/routers/admin.py:54:80: E501 line too long (87 > 79 characters)
+app/routers/admin.py:55:1: W293 blank line contains whitespace
+app/routers/admin.py:58:1: W293 blank line contains whitespace
+app/routers/admin.py:63:1: E302 expected 2 blank lines, found 1
+app/routers/admin.py:76:16: W292 no newline at end of file
+app/routers/auth.py:30:80: E501 line too long (87 > 79 characters)
+app/routers/auth.py:61:80: E501 line too long (107 > 79 characters)
+app/routers/auth.py:65:80: E501 line too long (82 > 79 characters)
+app/routers/auth.py:73:80: E501 line too long (88 > 79 characters)
+app/routers/auth.py:115:80: E501 line too long (111 > 79 characters)
+app/routers/auth.py:118:80: E501 line too long (84 > 79 characters)
+app/routers/auth.py:129:80: E501 line too long (90 > 79 characters)
+app/routers/colis.py:51:80: E501 line too long (88 > 79 characters)
+app/routers/colis.py:142:80: E501 line too long (92 > 79 characters)
+app/routers/colis.py:252:80: E501 line too long (86 > 79 characters)
+app/routers/colis.py:275:80: E501 line too long (101 > 79 characters)
+app/routers/colis.py:278:80: E501 line too long (98 > 79 characters)
+app/routers/colis.py:300:80: E501 line too long (92 > 79 characters)
+app/routers/colis.py:308:80: E501 line too long (86 > 79 characters)
+app/routers/colis.py:324:80: E501 line too long (87 > 79 characters)
+app/routers/colis.py:330:80: E501 line too long (89 > 79 characters)
+app/routers/colis.py:348:71: W292 no newline at end of file
+app/routers/health.py:16:1: W391 blank line at end of file
+app/schemas/__init__.py:1:80: E501 line too long (80 > 79 characters)
+app/schemas/client.py:9:20: W291 trailing whitespace
+app/schemas/client.py:28:31: W292 no newline at end of file
+app/schemas/commande.py:64:31: W292 no newline at end of file
+app/schemas/conditionnement.py:11:45: W292 no newline at end of file
+app/schemas/mouvement_colis.py:14:45: W292 no newline at end of file
+app/schemas/user.py:17:80: E501 line too long (98 > 79 characters)
+app/services/auth_service.py:21:80: E501 line too long (94 > 79 characters)
+app/services/auth_service.py:28:1: E303 too many blank lines (4)
+app/services/auth_service.py:39:80: E501 line too long (83 > 79 characters)
+app/services/auth_service.py:48:80: E501 line too long (101 > 79 characters)
+app/services/auth_service.py:50:80: E501 line too long (98 > 79 characters)
+app/services/auth_service.py:57:80: E501 line too long (92 > 79 characters)
+app/services/auth_service.py:59:80: E501 line too long (83 > 79 characters)
+app/services/auth_service.py:60:80: E501 line too long (92 > 79 characters)
+app/services/auth_service.py:67:80: E501 line too long (97 > 79 characters)
+app/services/auth_service.py:113:80: E501 line too long (98 > 79 characters)
+app/services/auth_service.py:136:80: E501 line too long (83 > 79 characters)
+app/services/auth_service.py:146:80: E501 line too long (88 > 79 characters)
+app/services/colis_service.py:218:80: E501 line too long (83 > 79 characters)
+app/services/colis_service.py:278:80: E501 line too long (89 > 79 characters)
+app/services/colis_service.py:300:80: E501 line too long (92 > 79 characters)
+app/services/colis_service.py:354:80: E501 line too long (84 > 79 characters)
+app/services/colis_service.py:390:45: W292 no newline at end of file
+app/tests/conftest.py:57:80: E501 line too long (81 > 79 characters)
+app/tests/conftest.py:62:80: E501 line too long (94 > 79 characters)
+app/tests/conftest.py:64:80: E501 line too long (82 > 79 characters)
+app/tests/conftest.py:70:80: E501 line too long (80 > 79 characters)
+app/tests/conftest.py:82:80: E501 line too long (111 > 79 characters)
+app/tests/conftest.py:100:1: E302 expected 2 blank lines, found 1
+app/tests/conftest.py:134:41: W292 no newline at end of file
+app/tests/test_auth.py:9:1: F401 'app.models.user.UserRole' imported but unused
+app/tests/test_auth.py:45:80: E501 line too long (92 > 79 characters)
+app/tests/test_auth.py:60:80: E501 line too long (81 > 79 characters)
+app/tests/test_auth.py:76:80: E501 line too long (93 > 79 characters)
+app/tests/test_auth.py:88:80: E501 line too long (84 > 79 characters)
+app/tests/test_auth.py:126:80: E501 line too long (81 > 79 characters)

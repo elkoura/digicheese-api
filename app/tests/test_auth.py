@@ -54,6 +54,8 @@ def test_register_duplicate_email(client: TestClient, db: Session, test_user: Us
     assert response.status_code == 400
     assert "already registered" in response.json()["detail"].lower()
 
+    print(response.status_code, response.json())
+
 
 def test_login_success(client: TestClient, db: Session, test_user: User) -> None:
     """Connexion réussie."""

@@ -3,6 +3,7 @@ from __future__ import annotations
 import secrets
 from datetime import datetime, timedelta, timezone
 
+
 import bcrypt
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
@@ -10,7 +11,6 @@ from sqlalchemy.orm import Session
 from app.core.config import get_settings
 from app.models.refresh_token import RefreshToken
 from app.models.user import User, UserRole
-from app.schemas.auth import TokenPayload
 
 settings = get_settings()
 
@@ -21,6 +21,8 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
         return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
     except Exception:
         return False
+
+
 
 
 def get_password_hash(password: str) -> str:
@@ -137,6 +139,17 @@ def is_refresh_token_valid(db: Session, jti: str) -> bool:
         return False
     if token.revoked:
         return False
-    if token.expires_at < datetime.now(timezone.utc):
+
+    expires_at = token.expires_at
+
+    # MariaDB/MySQL renvoie souvent un datetime "naive" (sans tzinfo)
+    # même si on utilise DateTime(timezone=True). On considère alors que c'est de l'UTC.
+    if expires_at is None:
         return False
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+
+    if expires_at < datetime.now(timezone.utc):
+        return False
+
     return True

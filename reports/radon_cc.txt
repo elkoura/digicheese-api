@@ -1,0 +1,164 @@
+app/main.py
+    F 24:0 create_app - A
+app/routers/auth.py
+    F 73:0 refresh_token - B
+    F 31:0 register - A
+    F 49:0 login - A
+    F 129:0 get_current_user_info - A
+app/routers/colis.py
+    F 257:0 cancel_commande - A
+    F 286:0 add_ligne - A
+    F 143:0 create_commande - A
+    F 309:0 update_ligne - A
+    F 331:0 delete_ligne - A
+    F 87:0 get_client - A
+    F 105:0 update_client - A
+    F 123:0 delete_client - A
+    F 171:0 list_commandes - A
+    F 183:0 get_commande - A
+    F 199:0 update_commande - A
+    F 218:0 update_suivi - A
+    F 236:0 update_statut - A
+    F 22:0 build_commande_read - A
+    F 52:0 create_client - A
+    F 73:0 list_clients - A
+app/routers/health.py
+    F 13:0 health - A
+app/routers/admin.py
+    F 42:0 update_user - A
+    F 64:0 delete_user - A
+    F 21:0 get_user - A
+    F 14:0 list_users - A
+    F 32:0 create_admin_user - A
+app/core/logging.py
+    F 14:0 get_logger - A
+    F 7:0 setup_logging - A
+app/core/config.py
+    F 43:0 get_settings - A
+    C 10:0 Settings - A
+app/core/exceptions.py
+    F 11:0 global_exception_handler - A
+app/core/dependencies.py
+    F 16:0 get_current_user - B
+    F 68:0 require_role - A
+    F 86:0 get_current_active_user - A
+    F 91:0 get_current_admin - A
+    F 96:0 get_current_op_colis - A
+    F 103:0 get_current_op_stocks - A
+app/tests/conftest.py
+    F 85:0 _truncate_all_tables - A
+    F 32:0 _derive_test_db_url - A
+    F 67:0 _ensure_test_database_exists - A
+    F 55:0 _admin_url_for_create_db - A
+    F 101:0 _setup_test_db_schema - A
+    F 112:0 db - A
+    F 124:0 client - A
+app/tests/test_auth.py
+    F 25:0 test_register_user - B
+    F 60:0 test_login_success - A
+    F 88:0 test_get_current_user - A
+    F 45:0 test_register_duplicate_email - A
+    F 126:0 test_refresh_token - A
+    F 76:0 test_login_invalid_credentials - A
+    F 111:0 test_get_current_user_no_token - A
+    F 117:0 test_get_current_user_invalid_token - A
+    F 148:0 test_refresh_token_invalid - A
+    F 14:0 test_user - A
+app/models/user.py
+    C 12:0 UserRole - A
+    C 18:0 User - A
+app/models/commune.py
+    C 7:0 Commune - A
+app/models/mouvement_colis.py
+    C 12:0 MouvementColis - A
+app/models/client.py
+    C 7:0 Client - A
+app/models/adresse.py
+    C 7:0 Adresse - A
+app/models/refresh_token.py
+    C 11:0 RefreshToken - A
+app/models/conditionnement.py
+    C 9:0 Conditionnement - A
+app/models/detail_commande.py
+    C 7:0 DetailCommande - A
+app/models/commande.py
+    C 14:0 StatutCommande - A
+    C 23:0 Commande - A
+app/models/objet.py
+    C 7:0 Objet - A
+app/models/prix.py
+    C 7:0 Prix - A
+app/schemas/auth.py
+    C 6:0 Token - A
+    C 12:0 TokenPayload - A
+    C 18:0 UserLogin - A
+    C 23:0 RefreshTokenRequest - A
+app/schemas/user.py
+    C 10:0 UserBase - A
+    C 16:0 UserCreate - A
+    C 20:0 UserUpdate - A
+    C 27:0 UserRead - A
+    C 37:0 UserInDB - A
+app/schemas/mouvement_colis.py
+    C 6:0 MouvementColisRead - A
+app/schemas/client.py
+    C 6:0 ClientCreate - A
+    C 13:0 ClientUpdate - A
+    C 20:0 ClientRead - A
+app/schemas/conditionnement.py
+    C 4:0 ConditionnementRead - A
+app/schemas/commande.py
+    C 8:0 AdresseCreate - A
+    C 15:0 CommandeCreate - A
+    C 21:0 CommandeUpdate - A
+    C 25:0 CommandeStatutUpdate - A
+    C 29:0 CommandeSuiviUpdate - A
+    C 33:0 LigneCommandeCreate - A
+    C 38:0 LigneCommandeUpdate - A
+    C 42:0 LigneCommandeRead - A
+    C 51:0 CommandeRead - A
+app/db/session.py
+    F 12:0 get_engine - A
+    F 22:0 get_db - A
+    F 30:0 check_db - A
+app/db/base.py
+    C 7:0 Base - A
+app/db/init_db.py
+    F 7:0 init_db - A
+app/services/auth_service.py
+    F 135:0 is_refresh_token_valid - B
+    F 39:0 create_access_token - A
+    F 83:0 authenticate_user - A
+    F 18:0 verify_password - A
+    F 28:0 get_password_hash - A
+    F 64:0 decode_token - A
+    F 127:0 revoke_refresh_token - A
+    F 54:0 create_refresh_token - A
+    F 73:0 get_user_by_email - A
+    F 78:0 get_user_by_id - A
+    F 95:0 create_user - A
+    F 113:0 save_refresh_token - A
+    F 122:0 get_refresh_token - A
+app/services/colis_service.py
+    F 300:0 update_ligne - A
+    F 318:0 delete_ligne - A
+    F 335:0 compute_poids_total - A
+    F 67:0 update_client - A
+    F 100:0 create_commande - A
+    F 176:0 update_commande - A
+    F 221:0 change_statut - A
+    F 254:0 cancel_commande - A
+    F 278:0 add_ligne - A
+    F 373:0 compute_affranchissement - A
+    F 21:0 create_client - A
+    F 46:0 list_clients - A
+    F 56:0 get_client - A
+    F 85:0 delete_client - A
+    F 158:0 list_commandes - A
+    F 169:0 get_commande - A
+    F 191:0 update_suivi - A
+    F 207:0 can_cancel_commande - A
+    F 354:0 find_conditionnement - A
+
+128 blocks (classes, functions, methods) analyzed.
+Average complexity: A (1.7734375)
