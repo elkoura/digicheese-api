@@ -3,70 +3,83 @@ name: FastAPI_QualityPipeline
 on: [push]
 
 jobs:
-    build-test-quality:
-        runs-on: ubuntu-latest
+  build-test-quality:
+    runs-on: ubuntu-latest
 
-        services:
-            mysql:
-                image: mysql:8.0
-                env:
-                    MYSQL_ROOT_PASSWORD: root
-                    MYSQL_DATABASE: digicheese_test
-                ports:
-                    - 3306:3306
-                options: >-
-                    --health-cmd="mysqladmin ping -uroot -proot --silent"
-                    --health-interval=10s
-                    --health-timeout=5s
-                    --health-retries=10
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          # ⚠️ Recommandé: mettre ce mot de passe dans un Secret GitHub (ex: MYSQL_ROOT_PASSWORD)
+          # puis remplacer la ligne ci-dessous par: MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          # Ici, tu as demandé à utiliser le mot de passe EXACT, avec l'espace final.
+          MYSQL_ROOT_PASSWORD: "Nnbccnba4@@@$ "
+          MYSQL_DATABASE: digicheese_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="bash -lc 'MYSQL_PWD=\"$MYSQL_ROOT_PASSWORD\" mysqladmin ping -h 127.0.0.1 -uroot --silent'"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup Python
-              uses: actions/setup-python@v5
-              with:
-                  python-version: "3.10"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
 
-            - name: Install dependencies
-              run: |
-                  python -m pip install --upgrade pip
-                  pip install -r requirements.txt
-                  pip install flake8 pylint radon pytest
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install flake8 pylint radon pytest
 
-            - name: Create reports folder
-              run: mkdir -p reports/quality
+      - name: Create reports folder
+        run: mkdir -p reports/quality
 
-            - name: Wait for MySQL
-              run: |
-                  sudo apt-get update
-                  sudo apt-get install -y mysql-client
-                  for i in {1..30}; do
-                    mysqladmin ping -h 127.0.0.1 -uroot -proot --silent && break
-                    echo "Waiting for MySQL..."
-                    sleep 2
-                  done
+      - name: Wait for MySQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-client
+          # Utilise MYSQL_PWD pour supporter un mot de passe avec caractères spéciaux + espace final
+          export MYSQL_PWD="Nnbccnba4@@@$ "
+          for i in {1..30}; do
+            mysqladmin ping -h 127.0.0.1 -uroot --silent && break
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+      - name: Remove local .env files (avoid overriding CI env)
+        run: |
+          rm -f .env .env.* || true
 
-            - name: Run flake8 (do not fail hard)
-              run: flake8 app/ > reports/quality/flake8.txt || true
+      - name: Run flake8 (do not fail hard)
+        run: flake8 app/ > reports/quality/flake8.txt || true
 
-            - name: Run pylint (do not fail hard)
-              run: pylint app/ > reports/quality/pylint.txt || true
+      - name: Run pylint (do not fail hard)
+        run: pylint app/ > reports/quality/pylint.txt || true
 
-            - name: Run radon complexity
-              run: |
-                  radon cc app/ -a > reports/quality/radon_cc.txt
-                  radon mi app/ -s > reports/quality/radon_mi.txt
+      - name: Run radon complexity
+        run: |
+          radon cc app/ -a > reports/quality/radon_cc.txt
+          radon mi app/ -s > reports/quality/radon_mi.txt
 
-            - name: Run unit tests
-              env:
-                  TEST_DATABASE_URL: mysql+pymysql://root:root@127.0.0.1:3306/digicheese_test
-              run: |
-                  pytest -q --maxfail=1 --disable-warnings --junitxml=reports/quality/pytest-report.xml
+      - name: Run unit tests
+        env:
+          # IMPORTANT: mot de passe URL-encodé: @ -> %40, $ -> %24, espace final -> %20
+          DATABASE_URL: mysql+pymysql://root:Nnbccnba4%40%40%40%24%20@127.0.0.1:3306/digicheese_test
+          TEST_DATABASE_URL: mysql+pymysql://root:Nnbccnba4%40%40%40%24%20@127.0.0.1:3306/digicheese_test
+          # (optionnel) Pour debug en cas d'erreur
+          PYTHONUNBUFFERED: "1"
+        run: |
+          pytest -q --maxfail=1 --disable-warnings --junitxml=reports/quality/pytest-report.xml
 
-            - name: Upload reports
-              uses: actions/upload-artifact@v4
-              with:
-                  name: quality-reports
-                  path: reports/quality
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-reports
+
+          path: reports/quality
